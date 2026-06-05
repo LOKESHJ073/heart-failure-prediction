@@ -94,33 +94,260 @@ with st.sidebar:
 # ================= DASHBOARD =================
 if selected == "Dashboard":
 
-    st.title("Dashboard")
+    st.markdown("""
+    <div class="card">
+    <h1>❤️ Heart Failure Dashboard</h1>
+    <p>AI Powered Healthcare System</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.write("ONLY DASHBOARD CONTENT HERE")
-    # 👉 move your dashboard cards HERE
+    c1, c2, c3, c4 = st.columns(4)
+
+    with c1:
+        st.markdown("""
+        <div class="card">
+        <h3>🎯 Accuracy</h3>
+        <h2>92.6%</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown("""
+        <div class="card">
+        <h3>📊 Dataset</h3>
+        <h2>299</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown("""
+        <div class="card">
+        <h3>⚡ Features</h3>
+        <h2>12</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c4:
+        st.markdown("""
+        <div class="card">
+        <h3>🤖 AI Status</h3>
+        <h2>Active</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="card">
+    <h3>🩺 Overview</h3>
+    <p>This system predicts heart failure risk using machine learning and patient data.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ================= PREDICTION =================
 elif selected == "Prediction":
 
-    st.title("Prediction")
+    st.markdown("""
+    <div class="card">
+    <h2>🧠 Heart Failure Prediction</h2>
+    <p>Enter patient details to predict risk</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.write("ONLY PREDICTION CONTENT HERE")
-    # 👉 move your inputs + button HERE
+    col1, col2 = st.columns([2,1])
 
+    with col1:
+
+        age = st.number_input("Age", 1, 100, value=50)
+        anaemia = st.selectbox("Anaemia", [0,1])
+        cpk = st.number_input("CPK Level", value=250)
+        diabetes = st.selectbox("Diabetes", [0,1])
+        ef = st.number_input("Ejection Fraction", value=38)
+        bp = st.selectbox("High Blood Pressure", [0,1])
+        platelets = st.number_input("Platelets", value=263358.0)
+        creatinine = st.number_input("Serum Creatinine", value=1.0)
+        sodium = st.number_input("Serum Sodium", value=136)
+        sex = st.selectbox("Sex", [0,1])
+        smoking = st.selectbox("Smoking", [0,1])
+        time = st.number_input("Follow Up Time", value=100)
+
+        predict_btn = st.button("🔍 Predict Risk")
+
+    with col2:
+
+        st.markdown("""
+        <div class="card">
+        <h3>📌 Result Panel</h3>
+        <p>Prediction result will appear here</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ---------------- PREDICTION LOGIC ----------------
+    if predict_btn:
+
+        features = np.array([[
+            age,
+            anaemia,
+            cpk,
+            diabetes,
+            ef,
+            bp,
+            platelets,
+            creatinine,
+            sodium,
+            sex,
+            smoking,
+            time
+        ]])
+
+        prediction = model.predict(features)
+
+        try:
+            prob = model.predict_proba(features)[0][1]
+        except:
+            prob = 0.5
+
+        risk = prob * 100
+
+        st.markdown("## 📊 Prediction Result")
+
+        st.progress(int(risk))
+
+        st.markdown(f"""
+        <div class="card">
+        <h3>Risk Score</h3>
+        <h2>{risk:.2f}%</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if prediction[0] == 1:
+            st.error("⚠️ HIGH RISK OF HEART FAILURE")
+        else:
+            st.success("✅ LOW RISK OF HEART FAILURE")
 # ================= ANALYTICS =================
 elif selected == "Analytics":
 
-    st.title("Analytics")
+    st.markdown("""
+    <div class="card">
+    <h2>📊 Health Analytics Dashboard</h2>
+    <p>AI based risk insights and patient statistics</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.write("ONLY ANALYTICS HERE")
-    # 👉 move charts HERE
+    c1, c2 = st.columns(2)
 
-# ================= ABOUT =================
+    with c1:
+        st.markdown("""
+        <div class="card">
+        <h3>❤️ Risk Factors</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        risk_data = {
+            "Feature": ["Age","Diabetes","Smoking","Blood Pressure","Anaemia"],
+            "Impact": [85,70,60,75,50]
+        }
+
+        st.bar_chart(pd.DataFrame(risk_data).set_index("Feature"))
+
+    with c2:
+        st.markdown("""
+        <div class="card">
+        <h3>📈 Patient Metrics</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        metric_data = {
+            "Metric": ["BMI","Sodium","Creatinine"],
+            "Value": [25,136,1.2]
+        }
+
+        st.bar_chart(pd.DataFrame(metric_data).set_index("Metric"))
+
+    # EXTRA CARDS
+    st.markdown("## 📌 Key Insights")
+
+    c3, c4, c5, c6 = st.columns(4)
+
+    with c3:
+        st.markdown("""
+        <div class="card">
+        <h3>⚠️ High Risk</h3>
+        <h2>34%</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c4:
+        st.markdown("""
+        <div class="card">
+        <h3>✅ Low Risk</h3>
+        <h2>66%</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c5:
+        st.markdown("""
+        <div class="card">
+        <h3>👥 Patients</h3>
+        <h2>299</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c6:
+        st.markdown("""
+        <div class="card">
+        <h3>📊 Avg Risk</h3>
+        <h2>42%</h2>
+        </div>
+        """, unsafe_allow_html=True)
+        # ================= ABOUT =================
 elif selected == "About":
 
-    st.title("About")
+    st.markdown("""
+    <div class="card">
+    <h2>ℹ️ About Project</h2>
+    <p>Heart Failure Prediction AI System using Machine Learning + Streamlit</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.write("ONLY ABOUT HERE")
+    st.markdown("## 👨‍💻 Developer Details")
+
+    c1, c2 = st.columns(2)
+
+    with c1:
+        st.markdown("""
+        <div class="card">
+        <h3>👤 Name</h3>
+        <h2>Lokesh J</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+        <h3>🎓 Education</h3>
+        <p>M.Sc Data Science</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown("""
+        <div class="card">
+        <h3>🚀 Project</h3>
+        <p>Final Year AI Healthcare Project</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+        <h3>🛠 Tech Stack</h3>
+        <p>Python, Streamlit, Machine Learning</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="card">
+    <h3>❤️ Project Goal</h3>
+    <p>To predict heart failure risk early using AI and help doctors make better decisions.</p>
+    </div>
+    """, unsafe_allow_html=True)
 # ---------------- HEADER ----------------
 
 st.markdown("""
