@@ -61,7 +61,7 @@ text-shadow:0 0 15px #00E5FF;
 
 # ---------------- SIDEBAR ----------------
 
-with st.sidebar
+with st.sidebar:
 
     st.markdown("# ❤️ Heart failure prediction")
 
