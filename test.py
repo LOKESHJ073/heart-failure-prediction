@@ -156,23 +156,22 @@ elif selected == "Prediction":
 
     with col1:
 
-        age = st.number_input("Age", 1, 100, value=50)
-        anaemia = st.selectbox("Anaemia", [0,1])
-        cpk = st.number_input("CPK Level", value=250)
-        diabetes = st.selectbox("Diabetes", [0,1])
-        ef = st.number_input("Ejection Fraction", value=38)
-        bp = st.selectbox("High Blood Pressure", [0,1])
-        platelets = st.number_input("Platelets", value=263358.0)
-        creatinine = st.number_input("Serum Creatinine", value=1.0)
-        sodium = st.number_input("Serum Sodium", value=136)
-        sex = st.selectbox("Sex", [0,1])
-        smoking = st.selectbox("Smoking", [0,1])
-        time = st.number_input("Follow Up Time", value=100)
+        age = st.number_input("Age", 1, 100, value=50, key="age")
+        anaemia = st.selectbox("Anaemia", [0,1], key="anaemia")
+        cpk = st.number_input("CPK Level", value=250, key="cpk")
+        diabetes = st.selectbox("Diabetes", [0,1], key="diabetes")
+        ef = st.number_input("Ejection Fraction", value=38, key="ef")
+        bp = st.selectbox("High Blood Pressure", [0,1], key="bp")
+        platelets = st.number_input("Platelets", value=263358.0, key="platelets")
+        creatinine = st.number_input("Serum Creatinine", value=1.0, key="creatinine")
+        sodium = st.number_input("Serum Sodium", value=136, key="sodium")
+        sex = st.selectbox("Sex", [0,1], key="sex")
+        smoking = st.selectbox("Smoking", [0,1], key="smoking")
+        time = st.number_input("Follow Up Time", value=100, key="time")
 
         predict_btn = st.button("🔍 Predict Risk")
 
     with col2:
-
         st.markdown("""
         <div class="card">
         <h3>📌 Result Panel</h3>
@@ -180,23 +179,12 @@ elif selected == "Prediction":
         </div>
         """, unsafe_allow_html=True)
 
-    # ---------------- PREDICTION LOGIC ----------------
+    # prediction logic
     if predict_btn:
 
-        features = np.array([[
-            age,
-            anaemia,
-            cpk,
-            diabetes,
-            ef,
-            bp,
-            platelets,
-            creatinine,
-            sodium,
-            sex,
-            smoking,
-            time
-        ]])
+        features = np.array([[age, anaemia, cpk, diabetes, ef, bp,
+                              platelets, creatinine, sodium,
+                              sex, smoking, time]])
 
         prediction = model.predict(features)
 
@@ -207,23 +195,12 @@ elif selected == "Prediction":
 
         risk = prob * 100
 
-        st.markdown("## 📊 Prediction Result")
-
         st.progress(int(risk))
-
-        st.markdown(f"""
-        <div class="card">
-        <h3>Risk Score</h3>
-        <h2>{risk:.2f}%</h2>
-        </div>
-        """, unsafe_allow_html=True)
 
         if prediction[0] == 1:
             st.error("⚠️ HIGH RISK OF HEART FAILURE")
         else:
             st.success("✅ LOW RISK OF HEART FAILURE")
-        elif selected == "Prediction":
-            age = st.number_input("Age", key="age")
 # ================= ANALYTICS =================
 elif selected == "Analytics":
 
