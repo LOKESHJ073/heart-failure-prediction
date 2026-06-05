@@ -81,18 +81,27 @@ with st.sidebar:
         ],
         default_index=0
     )
+# ---------------- SIDEBAR ----------------
+with st.sidebar:
+    selected = option_menu(
+        menu_title=None,
+        options=["Dashboard","Prediction","Analytics","About"],
+        icons=["house","heart-pulse","bar-chart","info-circle"],
+        default_index=0
+    )
+
+# 👇 HERE START PAGE CONTROL
 if selected == "Dashboard":
-    st.title("Dashboard Page")
+    st.title("Dashboard")
 
 elif selected == "Prediction":
-    st.title("Prediction Page")
+    st.title("Prediction")
 
 elif selected == "Analytics":
-    st.title("Analytics Page")
+    st.title("Analytics")
 
 elif selected == "About":
-    st.title("About Page")
-
+    st.title("About")
 # ---------------- HEADER ----------------
 
 st.markdown("""
