@@ -222,9 +222,8 @@ elif selected == "Prediction":
             st.error("⚠️ HIGH RISK OF HEART FAILURE")
         else:
             st.success("✅ LOW RISK OF HEART FAILURE")
-            if selected == "Prediction":
-
-    age = st.number_input("Age", key="age")
+        elif selected == "Prediction":
+            age = st.number_input("Age", key="age")
 # ================= ANALYTICS =================
 elif selected == "Analytics":
 
