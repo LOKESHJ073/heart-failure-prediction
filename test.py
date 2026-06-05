@@ -88,21 +88,36 @@ with st.sidebar:
         options=["Dashboard","Prediction","Analytics","About"],
         icons=["house","heart-pulse","bar-chart","info-circle"],
         default_index=0,
-        key="main_menu"   # ⭐ IMPORTANT FIX
+        key="main_menu"
     )
 
-# 👇 HERE START PAGE CONTROL
+# ================= DASHBOARD =================
 if selected == "Dashboard":
-    st.title("Dashboard")
 
+    st.markdown("## ❤️ Dashboard")
+
+    # 👉 ALL dashboard UI HERE
+    st.write("Cards, stats, etc")
+
+# ================= PREDICTION =================
 elif selected == "Prediction":
-    st.title("Prediction")
 
+    st.markdown("## 🧠 Prediction")
+
+    # 👉 ALL input boxes + button HERE
+    st.write("Prediction form here")
+
+# ================= ANALYTICS =================
 elif selected == "Analytics":
-    st.title("Analytics")
 
+    st.markdown("## 📊 Analytics")
+
+    # 👉 charts HERE
+
+# ================= ABOUT =================
 elif selected == "About":
-    st.title("About")
+
+    st.markdown("## ℹ️ About")
 # ---------------- HEADER ----------------
 
 st.markdown("""
