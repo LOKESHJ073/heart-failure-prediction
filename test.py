@@ -94,30 +94,33 @@ with st.sidebar:
 # ================= DASHBOARD =================
 if selected == "Dashboard":
 
-    st.markdown("## ❤️ Dashboard")
+    st.title("Dashboard")
 
-    # 👉 ALL dashboard UI HERE
-    st.write("Cards, stats, etc")
+    st.write("ONLY DASHBOARD CONTENT HERE")
+    # 👉 move your dashboard cards HERE
 
 # ================= PREDICTION =================
 elif selected == "Prediction":
 
-    st.markdown("## 🧠 Prediction")
+    st.title("Prediction")
 
-    # 👉 ALL input boxes + button HERE
-    st.write("Prediction form here")
+    st.write("ONLY PREDICTION CONTENT HERE")
+    # 👉 move your inputs + button HERE
 
 # ================= ANALYTICS =================
 elif selected == "Analytics":
 
-    st.markdown("## 📊 Analytics")
+    st.title("Analytics")
 
-    # 👉 charts HERE
+    st.write("ONLY ANALYTICS HERE")
+    # 👉 move charts HERE
 
 # ================= ABOUT =================
 elif selected == "About":
 
-    st.markdown("## ℹ️ About")
+    st.title("About")
+
+    st.write("ONLY ABOUT HERE")
 # ---------------- HEADER ----------------
 
 st.markdown("""
