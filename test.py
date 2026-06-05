@@ -82,16 +82,16 @@ with st.sidebar:
         default_index=0
     )
 if selected == "Dashboard":
-    st.sidebar.success("Dashboard Selected")
+    st.title("Dashboard Page")
 
 elif selected == "Prediction":
-    st.sidebar.success("Prediction Selected")
+    st.title("Prediction Page")
 
 elif selected == "Analytics":
-    st.sidebar.success("Analytics Selected")
+    st.title("Analytics Page")
 
 elif selected == "About":
-    st.sidebar.success("About Selected")
+    st.title("About Page")
 
 # ---------------- HEADER ----------------
 
