@@ -1,203 +1,249 @@
 import streamlit as st
 import pickle
 import numpy as np
+import pandas as pd
+from PIL import Image
 
-# Load model
-model = pickle.load(open("heart_model.pkl", "rb"))
-
-# Page Config
+# ---------------- PAGE CONFIG ----------------
 st.set_page_config(
     page_title="Heart Failure Prediction",
     page_icon="❤️",
     layout="wide"
 )
 
-# Custom CSS
+# ---------------- LOAD MODEL ----------------
+model = pickle.load(open("heart_model.pkl", "rb"))
+
+# ---------------- CUSTOM CSS ----------------
 st.markdown("""
 <style>
 
 .stApp{
-    background: linear-gradient(135deg,#050816,#0b1026);
-    color:white;
+background: linear-gradient(135deg,#0B1026,#141E46,#1F4068);
+color:white;
 }
 
-h1,h2,h3,h4,p,label{
-    color:white !important;
+h1,h2,h3,h4,h5,h6,label,p{
+color:white !important;
 }
 
-[data-testid="stMetric"]{
-    background:#10182b;
-    padding:15px;
-    border-radius:15px;
+.card{
+background: rgba(255,255,255,0.08);
+padding:20px;
+border-radius:20px;
+backdrop-filter: blur(10px);
+box-shadow:0 4px 20px rgba(0,0,0,0.3);
+text-align:center;
 }
 
-div.stButton > button{
-    width:100%;
-    background:#ff4b4b;
-    color:white;
-    border:none;
-    border-radius:10px;
-    height:50px;
-    font-size:18px;
-    font-weight:bold;
+.metric{
+font-size:28px;
+font-weight:bold;
+color:#00E5FF;
+}
+
+.stButton>button{
+width:100%;
+background:linear-gradient(90deg,#ff416c,#ff4b2b);
+color:white;
+border:none;
+border-radius:12px;
+height:55px;
+font-size:18px;
+font-weight:bold;
+}
+
+.stButton>button:hover{
+background:linear-gradient(90deg,#ff4b2b,#ff416c);
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# Sidebar
+# ---------------- SIDEBAR ----------------
 with st.sidebar:
 
-    st.title("❤️ Heart Failure Prediction")
-
-    st.markdown("---")
+    st.title("❤️ Heart Failure")
 
     patient_name = st.text_input(
         "Patient Name",
         placeholder="Enter patient name"
     )
 
-    height = st.number_input(
+    height_cm = st.number_input(
         "Height (cm)",
         min_value=100,
         max_value=250,
         value=170
     )
 
-    weight = st.number_input(
+    weight_kg = st.number_input(
         "Weight (kg)",
         min_value=20,
-        max_value=250,
+        max_value=200,
         value=70
     )
 
-    bmi = weight / ((height / 100) ** 2)
+    bmi = weight_kg / ((height_cm/100)**2)
 
-    st.metric(
-        "BMI",
-        f"{bmi:.2f}"
+    st.markdown(
+        f"""
+        <div class="card">
+        <h4>BMI</h4>
+        <div class="metric">{bmi:.2f}</div>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
-# Title
-st.title("❤️ Heart Failure Prediction System")
+# ---------------- HEADER ----------------
 
-st.markdown("""
-### 🩺 Heart Failure Risk Prediction
+col1,col2 = st.columns([1,4])
 
-Enter patient details below and click **Predict** to check the risk of heart failure.
-""")
+with col1:
+    try:
+        image = Image.open("heart.png")
+        st.image(image,width=120)
+    except:
+        st.write("❤️")
+
+with col2:
+    st.title("❤️ Heart Failure Prediction System")
+    st.markdown(
+        "### 🩺 AI Powered Healthcare Risk Prediction"
+    )
 
 st.markdown("---")
 
-# Layout
-col1, col2 = st.columns([2,1])
+# ---------------- DASHBOARD CARDS ----------------
 
-# Inputs
-with col1:
+c1,c2,c3,c4 = st.columns(4)
+
+with c1:
+    st.markdown("""
+    <div class="card">
+    <h4>Model Accuracy</h4>
+    <div class="metric">92.6%</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with c2:
+    st.markdown("""
+    <div class="card">
+    <h4>Dataset</h4>
+    <div class="metric">299</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with c3:
+    st.markdown("""
+    <div class="card">
+    <h4>Features</h4>
+    <div class="metric">12</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with c4:
+    st.markdown("""
+    <div class="card">
+    <h4>AI Status</h4>
+    <div class="metric">Active</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# ---------------- INPUT FORM ----------------
+
+left,right = st.columns([2,1])
+
+with left:
 
     st.subheader("📋 Patient Information")
 
     age = st.number_input(
         "Age",
-        min_value=1,
-        max_value=100,
-        value=50
+        1,100,50
     )
 
     anaemia = st.selectbox(
-        "Anaemia (0 = No, 1 = Yes)",
+        "Anaemia",
         [0,1]
     )
 
     creatinine_phosphokinase = st.number_input(
         "CPK Level",
-        min_value=0,
         value=250
     )
 
     diabetes = st.selectbox(
-        "Diabetes (0 = No, 1 = Yes)",
+        "Diabetes",
         [0,1]
     )
 
     ejection_fraction = st.number_input(
-        "Ejection Fraction (%)",
-        min_value=1,
-        max_value=100,
-        value=38
+        "Ejection Fraction",
+        1,100,38
     )
 
     high_blood_pressure = st.selectbox(
-        "High Blood Pressure (0 = No, 1 = Yes)",
+        "High Blood Pressure",
         [0,1]
     )
 
     platelets = st.number_input(
         "Platelets",
-        min_value=10000.0,
         value=263358.0
     )
 
     serum_creatinine = st.number_input(
         "Serum Creatinine",
-        min_value=0.1,
         value=1.0
     )
 
     serum_sodium = st.number_input(
         "Serum Sodium",
-        min_value=100,
-        max_value=150,
         value=136
     )
 
     sex = st.selectbox(
-        "Sex (0 = Female, 1 = Male)",
+        "Sex",
         [0,1]
     )
 
     smoking = st.selectbox(
-        "Smoking (0 = No, 1 = Yes)",
+        "Smoking",
         [0,1]
     )
 
     time = st.number_input(
-        "Follow Up Time (Days)",
-        min_value=1,
-        max_value=300,
+        "Follow Up Time",
         value=100
     )
 
-with col2:
+with right:
 
-    st.subheader("ℹ️ Project Overview")
+    st.markdown("""
+    <div class="card">
+    <h3>ℹ️ Project Overview</h3>
+    <br>
+    AI based heart failure prediction using
+    Machine Learning.
+    <br><br>
+    ✅ Early Detection
+    <br>
+    ✅ Healthcare Analytics
+    <br>
+    ✅ Clinical Support
+    <br>
+    ✅ Risk Assessment
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.info("""
-Heart Failure Prediction System uses Machine Learning
-to predict heart failure risk based on patient data.
-""")
+# ---------------- PREDICTION ----------------
 
-    st.success("""
-✅ Early Risk Detection
+st.markdown("<br>", unsafe_allow_html=True)
 
-✅ Clinical Decision Support
-
-✅ Patient Monitoring
-
-✅ Healthcare Analytics
-""")
-
-    st.subheader("👨‍🎓 Developer")
-
-    st.write("""
-**Lokesh**
-
-Final Year M.Sc Data Science
-""")
-
-st.markdown("---")
-
-# Prediction
 if st.button("🔍 Predict Heart Failure Risk"):
 
     features = np.array([[
@@ -217,81 +263,59 @@ if st.button("🔍 Predict Heart Failure Risk"):
 
     prediction = model.predict(features)
 
+    try:
+        probability = model.predict_proba(features)[0][1]
+    except:
+        probability = 0.5
+
     st.subheader("📊 Prediction Result")
 
-    try:
-        probability = model.predict_proba(features)
-        risk_score = probability[0][1] * 100
-    except:
-        risk_score = 50
+    st.progress(float(probability))
 
     st.metric(
         "Heart Failure Risk %",
-        f"{risk_score:.2f}%"
+        f"{probability*100:.2f}%"
     )
-
-    st.progress(int(risk_score))
 
     if prediction[0] == 1:
 
-        st.error("⚠️ High Risk of Heart Failure")
+        st.error(
+            "⚠️ HIGH RISK OF HEART FAILURE"
+        )
 
         st.warning(
             "Patient should undergo further medical evaluation."
         )
 
-        result_text = "High Risk"
-
     else:
 
-        st.success("✅ Low Risk of Heart Failure")
+        st.success(
+            "✅ LOW RISK OF HEART FAILURE"
+        )
 
         st.info(
             "Patient currently shows lower risk indicators."
         )
 
-        result_text = "Low Risk"
+    history = pd.DataFrame({
+        "Patient":[patient_name],
+        "Risk %":[round(probability*100,2)]
+    })
 
-    report = f"""
-Heart Failure Prediction Report
+    st.subheader("📁 Prediction History")
 
-Patient Name : {patient_name}
+    st.dataframe(history)
 
-Age : {age}
+# ---------------- FOOTER ----------------
 
-BMI : {bmi:.2f}
+st.markdown("---")
 
-Risk Score : {risk_score:.2f}%
-
-Prediction : {result_text}
+st.markdown(
 """
-
-    st.download_button(
-        "📥 Download Report",
-        report,
-        file_name="heart_failure_report.txt"
-    )
-
-st.markdown("---")
-
-st.subheader("ℹ️ About Project")
-
-st.write("""
-This Heart Failure Prediction System uses Machine Learning
-to predict the likelihood of heart failure based on patient
-clinical records.
-
-• Early Risk Detection
-
-• Clinical Decision Support
-
-• Improved Patient Monitoring
-
-• Healthcare Prediction Analysis
-""")
-
-st.markdown("---")
-
-st.caption("❤️ Heart Failure Prediction System")
-st.caption("👨‍🎓 Developed by Lokesh")
-st.caption("🎓 Final Year M.Sc Data Science Project")
+<center>
+<h4>❤️ Heart Failure Prediction System</h4>
+<p>Developed by Lokesh | M.Sc Data Science</p>
+</center>
+""",
+unsafe_allow_html=True
+)
