@@ -27,7 +27,7 @@ color:white;
 }
 
 section[data-testid="stSidebar"]{
-background:#0A0F1F;
+background:linear-gradient(180deg,#050816,#0A0F1F,#111827);
 }
 
 h1,h2,h3,h4,h5,h6,p,label{
@@ -37,26 +37,33 @@ color:white !important;
 .card{
 background:rgba(255,255,255,0.08);
 padding:20px;
-border-radius:20px;
-backdrop-filter:blur(15px);
-border:1px solid rgba(255,255,255,0.1);
-box-shadow:0px 8px 32px rgba(0,0,0,0.3);
+border-radius:25px;
+backdrop-filter:blur(20px);
+border:1px solid rgba(0,229,255,0.4);
+box-shadow:0 0 20px rgba(0,229,255,0.4);
+transition:all 0.3s ease;
 }
 
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 0 30px rgba(255,0,128,0.6);
+}
 .metric{
 font-size:32px;
 font-weight:bold;
 color:#00E5FF;
+text-shadow:0 0 15px #00E5FF;
 }
+
 
 </style>
 """, unsafe_allow_html=True)
 
 # ---------------- SIDEBAR ----------------
 
-with st.sidebar:
+with st.sidebar
 
-    st.markdown("# ❤️ Heart AI")
+    st.markdown("# ❤️ Heart failure prediction")
 
     selected = option_menu(
         menu_title=None,
@@ -74,6 +81,17 @@ with st.sidebar:
         ],
         default_index=0
     )
+if selected == "Dashboard":
+    st.sidebar.success("Dashboard Selected")
+
+elif selected == "Prediction":
+    st.sidebar.success("Prediction Selected")
+
+elif selected == "Analytics":
+    st.sidebar.success("Analytics Selected")
+
+elif selected == "About":
+    st.sidebar.success("About Selected")
 
 # ---------------- HEADER ----------------
 
