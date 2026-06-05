@@ -81,18 +81,39 @@ with st.sidebar:
         ],
         default_index=0
     )
+# 1️⃣ SIDEBAR (ONLY MENU)
+with st.sidebar:
+    selected = option_menu(
+        menu_title=None,
+        options=["Dashboard","Prediction","Analytics","About"],
+        icons=["house","heart-pulse","bar-chart","info-circle"],
+        default_index=0
+    )
+
+# 2️⃣ DASHBOARD PAGE
 if selected == "Dashboard":
-    st.title("Dashboard Page")
+    st.title("Dashboard")
 
+    # 👉 ALL dashboard cards here
+    st.write("Dashboard content")
+
+# 3️⃣ PREDICTION PAGE
 elif selected == "Prediction":
-    st.title("Prediction Page")
+    st.title("Prediction")
 
+    # 👉 ALL input boxes + predict button here
+    age = st.number_input("Age")
+    st.write("Prediction UI here")
+
+# 4️⃣ ANALYTICS PAGE
 elif selected == "Analytics":
-    st.title("Analytics Page")
+    st.title("Analytics")
 
+    # 👉 charts here
+
+# 5️⃣ ABOUT PAGE
 elif selected == "About":
-    st.title("About Page")
-
+    st.title("About")
 # ---------------- HEADER ----------------
 
 st.markdown("""
