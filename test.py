@@ -87,7 +87,8 @@ with st.sidebar:
         menu_title=None,
         options=["Dashboard","Prediction","Analytics","About"],
         icons=["house","heart-pulse","bar-chart","info-circle"],
-        default_index=0
+        default_index=0,
+        key="main_menu"   # ⭐ IMPORTANT FIX
     )
 
 # 👇 HERE START PAGE CONTROL
